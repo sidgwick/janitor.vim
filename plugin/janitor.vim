@@ -19,6 +19,12 @@ endif
 
 " Remove all spaces from end in each line
 fun! RemoveSpaces()
+    echo g:janitor_exclude_on_trailing_spaces
+    let exclude_idx = index(g:janitor_exclude_on_trailing_spaces, &filetype)
+    if exclude_idx != -1
+        return
+    endif
+
     if &bin | return | endif
     if search('\s\+$', 'n')
         let line = line('.')
@@ -47,11 +53,6 @@ function! JanitorToggleHighlight()
         call JanitorHighlightAll()
     endif
 endfunc
-
-
-" if index(g:janitor_exclude_on_trailing_spaces, &filetype) == -1
-"     return
-" endif
 
 if g:janitor_enable_highlight
     call JanitorHighlightAll()
