@@ -19,7 +19,6 @@ endif
 
 " Remove all spaces from end in each line
 fun! RemoveSpaces()
-    echo g:janitor_exclude_on_trailing_spaces
     let exclude_idx = index(g:janitor_exclude_on_trailing_spaces, &filetype)
     if exclude_idx != -1
         return
@@ -58,8 +57,10 @@ if g:janitor_enable_highlight
     call JanitorHighlightAll()
 endif
 
-" Bind RemoveSpaces to autocommand
-autocmd BufWritePre * call RemoveSpaces()
+if g:janitor_auto_clean_up_on_write
+    " Bind RemoveSpaces to autocommand
+    autocmd BufWritePre * call RemoveSpaces()
+endif
 
 command! JanitorHighlightAll                call JanitorHighlightAll()
 command! JanitorClearHighlight              call JanitorClearHighlight()
